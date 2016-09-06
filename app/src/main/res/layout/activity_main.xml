@@ -1,16 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.ernest.netwin.MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="#1c6df9">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="800px"
+        android:layout_height="480px"
+        android:gravity="right"
+        >
+        <LinearLayout
+            android:layout_width="160px"
+            android:layout_height="480px"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:layout_width="160px"
+                android:layout_height="80px"
+                android:shadowDy="1.0"
+                android:shadowDx="1.0"
+                android:shadowRadius="0.1"
+                android:shadowColor="#313131"
+                android:gravity="center"
+                android:text="OTIS"
+                android:textSize="60dp"
+                android:id="@+id/nameCompany"/>
+            <ImageView
+                android:layout_width="160px"
+                android:layout_height="230px"
+                android:id="@+id/arrowFlag"
+                android:src="@drawable/up"/>
+            <TextView
+                android:layout_width="160px"
+                android:layout_height="170px"
+                android:gravity="center"
+                android:id="@+id/curFloor"
+                android:text="88"
+                android:textSize="120dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right">
+            <VideoView
+                android:layout_width="640px"
+                android:layout_height="480px"
+                android:layout_gravity="center"
+                android:id="@+id/adsShow"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
-</RelativeLayout>
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/curdate"
+                android:layout_width="160px"
+                android:layout_height="60px"
+                android:text="2016-4-4"
+                android:textSize="35dp"
+                android:gravity="center"/>
+            <TextView
+                android:layout_width="160px"
+                android:layout_height="60px"
+                android:id="@+id/dayOfWeek"
+                android:text="星期一"
+                android:textSize="40dp"
+                android:gravity="center"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <com.dalong.marqueeview.MarqueeView
+                android:id="@+id/AdsTextView"
+                app:speed="500"
+                app:textSize="50dp"
+                app:isRepeat="true"
+                app:textcolor="#000"
+                app:marqueebackground="#1c6df9"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
