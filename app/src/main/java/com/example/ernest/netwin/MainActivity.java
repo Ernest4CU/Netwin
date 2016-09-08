@@ -181,8 +181,8 @@ public class MainActivity extends Activity {
      */
     class ReceiveThread extends Thread {
         public void run() {
+            String type = "HEX".trim();
             while (serialPort.isOpen) {
-                String type = "ASCII".trim();
                 String data = serialPort.receiveData(type);
                 if (data != null) {
                     Message msg = new Message();
@@ -192,7 +192,7 @@ public class MainActivity extends Activity {
                     myHandler.sendMessage(msg);
                 }
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -200,33 +200,48 @@ public class MainActivity extends Activity {
         }
     }
 
+    private int strParseToInt(String str) {
+        return Integer.parseInt(str);
+    }
+
     private android.os.Handler myHandler = new android.os.Handler() {
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {
                 case 1:
-                    Date date = new Date();
-                    String test = (String) msg.obj;
-                    char[] demo = test.toCharArray();
-                    if(demo.length>2){
-                        curFloor.setText(new String(demo,0,2));
-                        switch (demo[2]){
-                            case 'U':arrowFlag.setImageResource(R.drawable.up);break;
-                            case 'D':arrowFlag.setImageResource(R.drawable.down);break;
+                    String strData= (String) msg.obj;
+                    String[] strStateData=strData.split(" ");
+                    System.out.println("处理后数据长度："+strStateData.length);
+                    for (String str : strStateData
+                            ) {
+                        System.out.println("处理后的数据："+str);
+                    }
+
+
+                    if ((strStateData[5].equals("BB")) && (strStateData[0].equals("AA"))) {
+                        System.out.println("校验成功");
+                        System.out.println("十位："+strParseToInt(strStateData[1]));
+                        System.out.println("个位："+strParseToInt(strStateData[2]));
+                        System.out.println("和："+strParseToInt(strStateData[1])+strParseToInt(strStateData[2]));
+                        curFloor.setText(""+strParseToInt(strStateData[1])+strParseToInt(strStateData[2]));
+                        switch (strParseToInt(strStateData[3])){
+                            case 0:arrowFlag.setImageResource(R.drawable.up);break;
+                            case 1:arrowFlag.setImageResource(R.drawable.down);break;
                             default:break;
                         }
-//                        curFloor.setText(demo[0]+demo[1]+"");
-//                        if(demo[1]>0){
-//                            arrowFlag.setImageResource(R.drawable.up);
-//                        }else {
-//                            arrowFlag.setImageResource(R.drawable.down);
-//                        }
                     }
-//                    if(demo[0]==0x33){
-//                        textShow.setText((CharSequence) msg.obj);
-//                    }else{
-//                        textShow.setText("数据无效");
-//                    }
 
+//                    Date date = new Date();
+//                    System.out.println("进入handler");
+//                    String test = (String) msg.obj;
+//                    char[] demo = test.toCharArray();
+//                    if(demo.length>2){
+//                        curFloor.setText(new String(demo,0,2));
+//                        switch (demo[2]){
+//                            case 'U':arrowFlag.setImageResource(R.drawable.up);break;
+//                            case 'D':arrowFlag.setImageResource(R.drawable.down);break;
+//                            default:break;
+//                        }
+//                    }
                     break;
                 default:
                     break;
