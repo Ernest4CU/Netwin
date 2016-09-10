@@ -32,11 +32,15 @@ public class DownloadThread extends Thread {
     android.os.Handler adsTextSetHandler;
     String strNetwinPath="";
     String strNetwinVideoPath="/Video";
+    String strNetwinPicPath="/Pic";
+
     InputStream is;
     public DownloadThread(Socket socket, String path, android.os.Handler handler) {
         this.strNetwinPath = path;
         createPath(path);//创建根目录
         createPath(this.strNetwinPath+strNetwinVideoPath);//创建视频素材目录
+        createPath(this.strNetwinPath+strNetwinPicPath);//创建图片素材目录
+
         this.socket = socket;
         this.adsTextSetHandler = handler;
     }
@@ -150,7 +154,8 @@ public class DownloadThread extends Thread {
                 }
                 break;
             case 1://下载图片
-                file = new File("/mnt/sdcard1/Netwin/test.jpg");
+//                file = new File("/mnt/sdcard1/Netwin/test.jpg");
+                file = new File(strNetwinPath+strNetwinPicPath+"/test.jpg");
                 System.out.println(file.getPath());
                 try {
                     OutputStream out = new FileOutputStream(file);
