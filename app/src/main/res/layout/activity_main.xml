@@ -17,17 +17,10 @@
             android:layout_height="480px"
             android:orientation="vertical"
             >
-            <TextView
+            <ImageView
+                android:id="@+id/imgLogo"
                 android:layout_width="160px"
-                android:layout_height="80px"
-                android:shadowDy="1.0"
-                android:shadowDx="1.0"
-                android:shadowRadius="0.1"
-                android:shadowColor="#313131"
-                android:gravity="center"
-                android:text="OTIS"
-                android:textSize="60dp"
-                android:id="@+id/nameCompany"/>
+                android:layout_height="80px" />
             <ImageView
                 android:layout_width="160px"
                 android:layout_height="230px"

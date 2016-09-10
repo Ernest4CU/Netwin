@@ -30,9 +30,13 @@ public class DownloadThread extends Thread {
     int dataLength = 0;
     int datacomplete = -1;
     android.os.Handler adsTextSetHandler;
+    String strNetwinPath="";
+    String strNetwinVideoPath="/Video";
     InputStream is;
     public DownloadThread(Socket socket, String path, android.os.Handler handler) {
-        createPath(path);
+        this.strNetwinPath = path;
+        createPath(path);//创建根目录
+        createPath(this.strNetwinPath+strNetwinVideoPath);//创建视频素材目录
         this.socket = socket;
         this.adsTextSetHandler = handler;
     }
@@ -160,6 +164,9 @@ public class DownloadThread extends Thread {
                     out.flush();
                     out.close();
                     System.out.println("图片传输完毕");
+                    Message msg = new Message();
+                    msg.what=2;//更新LOGO
+                    adsTextSetHandler.sendMessage(msg);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } catch (IOException e) {

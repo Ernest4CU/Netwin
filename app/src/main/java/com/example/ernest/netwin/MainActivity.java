@@ -1,6 +1,8 @@
 package com.example.ernest.netwin;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.icu.util.Calendar;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -19,6 +21,7 @@ import com.dwin.dwinapi.SerialPort;
 
 import org.apache.http.util.EncodingUtils;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -30,11 +33,11 @@ import java.util.List;
 
 public class MainActivity extends Activity {
 
-    public Handler adsTextSetHandler=new Handler(){
+    public Handler updataViewHandler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case 1:
+                case 1://更新广告
                     AdsText="广告设置成功";
                     //adsTextView.setText(AdsText);
                     try {
@@ -43,6 +46,9 @@ public class MainActivity extends Activity {
                         e.printStackTrace();
                     }
                     adsTextView.setText(AdsText);
+                    break;
+                case 2://更新LOGO
+                    imgLogo.setImageBitmap(getImgBitmap("/mnt/sdcard1/Netwin/test.jpg"));
                     break;
                 default:break;
             }
@@ -57,6 +63,7 @@ public class MainActivity extends Activity {
     MarqueeView adsTextView;
     SerialPort serialPort;
     VideoView adsShow;
+    ImageView imgLogo;
     int intCurVideo=0;//记录当前播放的视频索引
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,8 +115,19 @@ public class MainActivity extends Activity {
         dayOfWeek = (TextView) findViewById(R.id.dayOfWeek);
         adsTextView = (MarqueeView) findViewById(R.id.AdsTextView);
         adsShow = (VideoView) findViewById(R.id.adsShow);
+        imgLogo = (ImageView) findViewById(R.id.imgLogo);
+        imgLogo.setImageBitmap(getImgBitmap("/mnt/sdcard1/Netwin/test.jpg"));
+
     }
 
+    private Bitmap getImgBitmap(String parth) {
+        Bitmap imgBitmap=null;
+        File file = new File(parth);
+        if (file.exists()) {
+            imgBitmap = BitmapFactory.decodeFile(parth);
+        }
+        return imgBitmap;
+    }
     private void openSerialPort(){
         serialPort = new SerialPort("S0", 9600, 8, 1,110);
         new ReceiveThread().start();
@@ -146,7 +164,7 @@ public class MainActivity extends Activity {
                 System.out.println("***服务器即将启动，等待客户端的连接***");
                 while (true) {
                     socket = serverSocket.accept();
-                    DownloadThread downloadThread = new DownloadThread(socket,"/mnt/sdcard1/Netwin/Video",adsTextSetHandler);
+                    DownloadThread downloadThread = new DownloadThread(socket,"/mnt/sdcard1/Netwin",updataViewHandler);
                     downloadThread.start();
                     count++;//用来记录客户量
                     InetAddress address = socket.getInetAddress();
