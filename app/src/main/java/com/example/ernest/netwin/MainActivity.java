@@ -48,7 +48,7 @@ public class MainActivity extends Activity {
                     adsTextView.setText(AdsText);
                     break;
                 case 2://更新LOGO
-                    imgLogo.setImageBitmap(getImgBitmap("/mnt/sdcard1/Netwin/test.jpg"));
+                    imgLogo.setImageBitmap(getImgBitmap("/mnt/sdcard1/Netwin/Pic/test.jpg"));
                     break;
                 default:break;
             }

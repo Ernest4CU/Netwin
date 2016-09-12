@@ -37,12 +37,15 @@ public class DownloadThread extends Thread {
     InputStream is;
     public DownloadThread(Socket socket, String path, android.os.Handler handler) {
         this.strNetwinPath = path;
-        createPath(path);//创建根目录
-        createPath(this.strNetwinPath+strNetwinVideoPath);//创建视频素材目录
-        createPath(this.strNetwinPath+strNetwinPicPath);//创建图片素材目录
-
         this.socket = socket;
         this.adsTextSetHandler = handler;
+        creatNetwinPath();//创建工作目录
+    }
+
+    private void creatNetwinPath() {
+        createPath(this.strNetwinPath);//创建根目录
+        createPath(this.strNetwinPath+strNetwinVideoPath);//创建视频素材目录
+        createPath(this.strNetwinPath+strNetwinPicPath);//创建图片素材目录
     }
 
     @Override
@@ -55,11 +58,11 @@ public class DownloadThread extends Thread {
             int tempData = 0;
             while((tempData=is.read())!=-1)
             {
-                if((tempData==10)&&(data[cnt-1]==13))
+                if((tempData==10)&&(data[cnt-1]==13))// \r\n先回车再换行
                 {
                     //处理代码,将byte转化为string，截取：号后的字符串
-                    data[cnt-1]=0;
-                    datacomplete++;
+                    data[cnt-1]=0;//清掉换行
+                    datacomplete++;//标记当前读取的数据段是什么数据 0：数据类型（0：文本 1、图片 2、视频）1：索引 2、有效数据长度
                     String str="";
                     switch (datacomplete)
                     {
