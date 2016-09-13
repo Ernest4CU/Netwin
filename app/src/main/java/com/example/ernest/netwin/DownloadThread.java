@@ -39,14 +39,8 @@ public class DownloadThread extends Thread {
         this.strNetwinPath = path;
         this.socket = socket;
         this.adsTextSetHandler = handler;
-        creatNetwinPath();//创建工作目录
     }
 
-    private void creatNetwinPath() {
-        createPath(this.strNetwinPath);//创建根目录
-        createPath(this.strNetwinPath+strNetwinVideoPath);//创建视频素材目录
-        createPath(this.strNetwinPath+strNetwinPicPath);//创建图片素材目录
-    }
 
     @Override
     public void run() {
@@ -158,7 +152,7 @@ public class DownloadThread extends Thread {
                 break;
             case 1://下载图片
 //                file = new File("/mnt/sdcard1/Netwin/test.jpg");
-                file = new File(strNetwinPath+strNetwinPicPath+"/test.jpg");
+                file = new File(strNetwinPath+strNetwinPicPath+"/logo_pic.jpg");
                 System.out.println(file.getPath());
                 try {
                     OutputStream out = new FileOutputStream(file);

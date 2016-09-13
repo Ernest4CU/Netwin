@@ -33,6 +33,7 @@ import java.util.List;
 
 public class MainActivity extends Activity {
 
+
     public Handler updataViewHandler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -48,7 +49,7 @@ public class MainActivity extends Activity {
                     adsTextView.setText(AdsText);
                     break;
                 case 2://更新LOGO
-                    imgLogo.setImageBitmap(getImgBitmap("/mnt/sdcard1/Netwin/Pic/test.jpg"));
+                    imgLogo.setImageBitmap(getImgBitmap(netwinData.getStrPicLogoPath()));
                     break;
                 default:break;
             }
@@ -64,13 +65,15 @@ public class MainActivity extends Activity {
     SerialPort serialPort;
     VideoView adsShow;
     ImageView imgLogo;
+    NetwinData netwinData = new NetwinData();//创建数据存储对象
     int intCurVideo=0;//记录当前播放的视频索引
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initView();
+        initView();//初始化界面
+        initNetwinSystem();
         AdsText = "广告测试 广告测试 广告测试 广告测试 广告测试 广告测试 广告测试 广告测试 " +
                 "广告测试 广告测试 广告测试 广告测试 广告测试 广告测试 广告测试 广告测试 广告测试 " +
                 "广告测试 广告测试 广告测试 广告测试 广告测试 广告测试 广告测试 广告测试 广告测试 ";
@@ -107,6 +110,24 @@ public class MainActivity extends Activity {
         videoDisplay(adsVidwoList[0]);
     }
 
+    private void initNetwinSystem() {
+        //初始化Netwin结构目录
+        creatNetwinPath();
+        //初始化xml
+    }
+
+    private void creatNetwinPath() {
+        createPath(netwinData.getStrRootPath());//创建根目录
+        createPath(netwinData.getStrVideoPath());//创建视频素材目录
+        createPath(netwinData.getStrPicPath());//创建图片素材目录
+    }
+
+    private static void createPath(String path) {
+        File file = new File(path);
+        if (!file.exists()) {
+            file.mkdir();
+        }
+    }
     private void initView()
     {
         arrowFlag = (ImageView) findViewById(R.id.arrowFlag);
@@ -116,7 +137,7 @@ public class MainActivity extends Activity {
         adsTextView = (MarqueeView) findViewById(R.id.AdsTextView);
         adsShow = (VideoView) findViewById(R.id.adsShow);
         imgLogo = (ImageView) findViewById(R.id.imgLogo);
-        imgLogo.setImageBitmap(getImgBitmap("/mnt/sdcard1/Netwin/test.jpg"));
+        imgLogo.setImageBitmap(getImgBitmap(netwinData.getStrPicLogoPath()));
 
     }
 
