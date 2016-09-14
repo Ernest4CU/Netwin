@@ -27,7 +27,7 @@ public class XmlDom4j {
         resetParameter();//读取参数
     }
 
-    private void resetParameter() {
+    public void resetParameter() {
         try {
             SAXReader reader = new SAXReader();
             FileInputStream fin = new FileInputStream(confPath);

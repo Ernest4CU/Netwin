@@ -39,14 +39,10 @@ public class MainActivity extends Activity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1://更新广告
-                    AdsText="广告设置成功";
-                    //adsTextView.setText(AdsText);
-                    try {
-                        AdsText=readFileSdcardFile("/mnt/sdcard1/Netwin/advertising.txt");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    adsTextView.setText(AdsText);
+                    xmlDom4j.setTextByName("advertisement",msg.obj+"");
+                    //xmlDom4j.resetParameter();
+                    netwinData.setAdvertisement(xmlDom4j.getAdvertisement());
+                    adsTextView.setText(netwinData.getAdvertisement());
                     break;
                 case 2://更新LOGO
                     imgLogo.setImageBitmap(getImgBitmap(netwinData.getStrPicLogoPath()));
@@ -66,38 +62,30 @@ public class MainActivity extends Activity {
     VideoView adsShow;
     ImageView imgLogo;
     NetwinData netwinData = new NetwinData();//创建数据存储对象
+    XmlDom4j xmlDom4j = new XmlDom4j();
     int intCurVideo=0;//记录当前播放的视频索引
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initNetwinSystem();//初始化Netwin系统数据
         initView();//初始化界面
-        initNetwinSystem();
-        AdsText = "广告测试 广告测试 广告测试 广告测试 广告测试 广告测试 广告测试 广告测试 " +
-                "广告测试 广告测试 广告测试 广告测试 广告测试 广告测试 广告测试 广告测试 广告测试 " +
-                "广告测试 广告测试 广告测试 广告测试 广告测试 广告测试 广告测试 广告测试 广告测试 ";
-        adsTextView.setText(AdsText);
-        adsTextView.startScroll();
 
-        closeBar();//关闭导航栏
-//        serialPort = new SerialPort("S0", 9600, 8, 1, 110);
-//        new ReceiveThread().start();//测试串口接收数据
-        openSerialPort();
+
+
+        openSerialPort();//开启串口
+
         //开启AP
         WifiHostBiz wifiHostBiz = new WifiHostBiz(this);
         if (!wifiHostBiz.isWifiApEnabled()) {
             wifiHostBiz.setWifiApEnabled(true);
         }
-        //更新广告
-        try {
-            AdsText=readFileSdcardFile("/mnt/sdcard1/Netwin/advertising.txt");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        adsTextView.setText(AdsText);
+
+
         new TimeThread().start();//开启日期更新进程，每秒更新一次
         new downThread().start();//开启网络服务器来监听上传任务
+
         setVideoAdd();//添加视频播放目录
         adsShow.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
@@ -114,6 +102,8 @@ public class MainActivity extends Activity {
         //初始化Netwin结构目录
         creatNetwinPath();
         //初始化xml
+        System.out.println("广告内容："+xmlDom4j.getAdvertisement());
+        netwinData.setAdvertisement(xmlDom4j.getAdvertisement());
     }
 
     private void creatNetwinPath() {
@@ -139,6 +129,9 @@ public class MainActivity extends Activity {
         imgLogo = (ImageView) findViewById(R.id.imgLogo);
         imgLogo.setImageBitmap(getImgBitmap(netwinData.getStrPicLogoPath()));
 
+        adsTextView.setText(netwinData.getAdvertisement());//设置广告
+        adsTextView.startScroll();
+        closeBar();//关闭导航栏
     }
 
     private Bitmap getImgBitmap(String parth) {

@@ -127,26 +127,20 @@ public class DownloadThread extends Thread {
         switch (dataType)
         {
             case 0://下载文本
-                file = new File("/mnt/sdcard1/Netwin/advertising.txt");
-                System.out.println(file.getPath());
                 try {
-                    OutputStream out = new FileOutputStream(file);
                     //读取数据
-                    int length=0;
-                    byte[] date = new byte[10000];
-                    while ((length = is.read(date)) != -1) {
-                        System.out.println(new String(date));
-                        out.write(date,0,length);
-                    }
-                    out.flush();
-                    out.close();
+                    String str=InputStreamTOString(is);
+                    System.out.println("广告传输的数据为："+str);
                     System.out.println("广告传输完毕");
                     Message msg = new Message();
                     msg.what=1;
+                    msg.obj=str;
                     adsTextSetHandler.sendMessage(msg);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 break;
