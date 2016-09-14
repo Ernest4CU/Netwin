@@ -26,6 +26,7 @@ public class NetwinData {
 
 //    private String StrPicLogoPath = strLogoPicPath + "/logo_pic.jpg";
 
+    List<Bitmap> bmWeek = new ArrayList<>();
     private String strLogo = strLogoPicPath+"/logo_pic.jpg";//文件地址
     private String strMon = strWeekPicPath + "/mon_pic.jpg";
     private String strTUE = strWeekPicPath + "/tue_pic.jpg";
@@ -43,7 +44,16 @@ public class NetwinData {
     public NetwinData() {
         up_pic = getImgBitmap( strDirPicPath+ "/up_pic.jpg");
         down_pic = getImgBitmap( strDirPicPath+ "/down_pic.jpg");
-        System.out.println("箭头添加成功");
+
+//        System.out.println("箭头添加成功");
+//        bmWeek.add(getImgBitmap(strMon));
+//        bmWeek.add(getImgBitmap(strTUE));
+//        bmWeek.add(getImgBitmap(strWED));
+//        bmWeek.add(getImgBitmap(strTHU));
+//        bmWeek.add(getImgBitmap(strFRI));
+//        bmWeek.add(getImgBitmap(strSAT));
+//        bmWeek.add(getImgBitmap(strSUN));
+//        System.out.println("添加星期图片成功");
     }
 
     private Bitmap getImgBitmap(String parth) {

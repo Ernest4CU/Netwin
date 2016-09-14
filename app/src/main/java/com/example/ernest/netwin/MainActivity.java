@@ -29,6 +29,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class MainActivity extends Activity {
@@ -333,6 +334,16 @@ public class MainActivity extends Activity {
         }
     }
 
+    private int getNumFromWeek(String week) {
+        String[] weekDays = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
+        for(int i=0;i<weekDays.length;i++){
+            if (week.equals(weekDays[i])) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
     //在主线程里面处理消息并更新UI界面
     private android.os.Handler mHandler1 = new Handler(){
         @Override
@@ -344,8 +355,13 @@ public class MainActivity extends Activity {
                     Date date=new Date(time);
                     SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
                     curdate.setText(format.format(date)); //更新时间
+
+
+
                     format=new SimpleDateFormat("EEEE");
-                    dayOfWeek.setText(format.format(date));//更新星期
+//                    dayOfWeek.setText(format.format(date));//更新星期
+
+                    dayOfWeek.setText(""+getNumFromWeek(format.format(date)+""));//更新星期
 
                     break;
                 default:
