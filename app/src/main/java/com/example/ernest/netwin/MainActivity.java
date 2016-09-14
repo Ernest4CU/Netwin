@@ -260,10 +260,10 @@ public class MainActivity extends Activity {
                         System.out.println("和："+strParseToInt(strStateData[1])+strParseToInt(strStateData[2]));
                         curFloor.setText(""+strParseToInt(strStateData[1])+strParseToInt(strStateData[2]));
                         switch (strParseToInt(strStateData[3])){
-                            case 0:arrowFlag.setImageResource(R.drawable.up);break;
-                            case 1:arrowFlag.setImageResource(R.drawable.down);break;
-//                            case 0:arrowFlag.setImageBitmap(netwinData.getUp_pic());break;
-//                            case 1:arrowFlag.setImageBitmap(netwinData.getDown_pic());break;
+//                            case 0:arrowFlag.setImageResource(R.drawable.up);break;
+//                            case 1:arrowFlag.setImageResource(R.drawable.down);break;
+                            case 0:arrowFlag.setImageBitmap(netwinData.getUp_pic());break;
+                            case 1:arrowFlag.setImageBitmap(netwinData.getDown_pic());break;
                             default:break;
                         }
                     }

@@ -23,12 +23,12 @@
                 android:layout_height="80px" />
             <ImageView
                 android:layout_width="160px"
-                android:layout_height="230px"
+                android:layout_height="170px"
                 android:id="@+id/arrowFlag"
                 android:src="@drawable/up"/>
             <TextView
                 android:layout_width="160px"
-                android:layout_height="170px"
+                android:layout_height="230px"
                 android:gravity="center"
                 android:id="@+id/curFloor"
                 android:text="88"

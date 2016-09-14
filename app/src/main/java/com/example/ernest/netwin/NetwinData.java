@@ -43,6 +43,7 @@ public class NetwinData {
     public NetwinData() {
         up_pic = getImgBitmap( strDirPicPath+ "/up_pic.jpg");
         down_pic = getImgBitmap( strDirPicPath+ "/down_pic.jpg");
+        System.out.println("箭头添加成功");
     }
 
     private Bitmap getImgBitmap(String parth) {
