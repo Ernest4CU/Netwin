@@ -24,6 +24,7 @@ import java.util.logging.Handler;
  */
 public class DownloadThread extends Thread {
 
+    NetwinData netwinData=new NetwinData();
     Socket socket = null;
     int dataType = -1;
     int dataIndex = 0;
@@ -146,7 +147,7 @@ public class DownloadThread extends Thread {
                 break;
             case 1://下载图片
 //                file = new File("/mnt/sdcard1/Netwin/test.jpg");
-                file = new File(strNetwinPath+strNetwinPicPath+"/logo_pic.jpg");
+                file = new File(netwinData.getStrLogoPicPath()+"/logo_pic.jpg");
                 System.out.println(file.getPath());
                 try {
                     OutputStream out = new FileOutputStream(file);

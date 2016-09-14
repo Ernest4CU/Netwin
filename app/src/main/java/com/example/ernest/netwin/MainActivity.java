@@ -45,7 +45,7 @@ public class MainActivity extends Activity {
                     adsTextView.setText(netwinData.getAdvertisement());
                     break;
                 case 2://更新LOGO
-                    imgLogo.setImageBitmap(getImgBitmap(netwinData.getStrPicLogoPath()));
+                    imgLogo.setImageBitmap(getImgBitmap(netwinData.getStrLogoPicPath() + "/logo_pic.jpg"));//依然是图片地址的问题
                     break;
                 default:break;
             }
@@ -110,6 +110,10 @@ public class MainActivity extends Activity {
         createPath(netwinData.getStrRootPath());//创建根目录
         createPath(netwinData.getStrVideoPath());//创建视频素材目录
         createPath(netwinData.getStrPicPath());//创建图片素材目录
+        createPath(netwinData.getStrLogoPicPath());//创建LOGO素材目录
+        createPath(netwinData.getStrWeekPicPath());//创建week素材目录
+        createPath(netwinData.getStrNumPicPath());//创建num素材目录
+        createPath(netwinData.getStrLetterPicPath());//创建num素材目录
     }
 
     private static void createPath(String path) {
@@ -127,7 +131,7 @@ public class MainActivity extends Activity {
         adsTextView = (MarqueeView) findViewById(R.id.AdsTextView);
         adsShow = (VideoView) findViewById(R.id.adsShow);
         imgLogo = (ImageView) findViewById(R.id.imgLogo);
-        imgLogo.setImageBitmap(getImgBitmap(netwinData.getStrPicLogoPath()));
+        imgLogo.setImageBitmap(getImgBitmap(netwinData.getStrLogoPicPath() + "/logo_pic.jpg"));//此处图片资源地址有问题
 
         adsTextView.setText(netwinData.getAdvertisement());//设置广告
         adsTextView.startScroll();
@@ -258,6 +262,8 @@ public class MainActivity extends Activity {
                         switch (strParseToInt(strStateData[3])){
                             case 0:arrowFlag.setImageResource(R.drawable.up);break;
                             case 1:arrowFlag.setImageResource(R.drawable.down);break;
+//                            case 0:arrowFlag.setImageBitmap(netwinData.getUp_pic());break;
+//                            case 1:arrowFlag.setImageBitmap(netwinData.getDown_pic());break;
                             default:break;
                         }
                     }
