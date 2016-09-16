@@ -24,7 +24,7 @@ import java.util.logging.Handler;
  */
 public class DownloadThread extends Thread {
 
-    NetwinData netwinData=new NetwinData();
+    NetwinData netwinData=null;
     Socket socket = null;
     int dataType = -1;
     int dataIndex = 0;
@@ -36,10 +36,11 @@ public class DownloadThread extends Thread {
     String strNetwinPicPath="/Pic";
 
     InputStream is;
-    public DownloadThread(Socket socket, String path, android.os.Handler handler) {
+    public DownloadThread(Socket socket, String path, android.os.Handler handler,NetwinData netwinData) {
         this.strNetwinPath = path;
         this.socket = socket;
         this.adsTextSetHandler = handler;
+        this.netwinData = netwinData;
     }
 
 

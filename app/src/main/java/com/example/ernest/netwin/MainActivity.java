@@ -57,7 +57,7 @@ public class MainActivity extends Activity {
     ImageView arrowFlag;
     TextView curFloor;
     TextView curdate;
-    TextView dayOfWeek;
+    ImageView dayOfWeek;
     MarqueeView adsTextView;
     SerialPort serialPort;
     VideoView adsShow;
@@ -128,7 +128,7 @@ public class MainActivity extends Activity {
         arrowFlag = (ImageView) findViewById(R.id.arrowFlag);
         curFloor = (TextView) findViewById(R.id.curFloor);
         curdate = (TextView) findViewById(R.id.curdate);
-        dayOfWeek = (TextView) findViewById(R.id.dayOfWeek);
+        dayOfWeek = (ImageView) findViewById(R.id.dayOfWeek);
         adsTextView = (MarqueeView) findViewById(R.id.AdsTextView);
         adsShow = (VideoView) findViewById(R.id.adsShow);
         imgLogo = (ImageView) findViewById(R.id.imgLogo);
@@ -183,7 +183,7 @@ public class MainActivity extends Activity {
                 System.out.println("***服务器即将启动，等待客户端的连接***");
                 while (true) {
                     socket = serverSocket.accept();
-                    DownloadThread downloadThread = new DownloadThread(socket,"/mnt/sdcard1/Netwin",updataViewHandler);
+                    DownloadThread downloadThread = new DownloadThread(socket,netwinData.getStrRootPath(),updataViewHandler,netwinData);
                     downloadThread.start();
                     count++;//用来记录客户量
                     InetAddress address = socket.getInetAddress();
@@ -225,7 +225,7 @@ public class MainActivity extends Activity {
                     Message msg = new Message();
                     msg.what = 1;
                     msg.obj = data;
-                    System.out.println(data + "<<<<<<<<==========data");
+//                    System.out.println(data + "<<<<<<<<==========data");
                     myHandler.sendMessage(msg);
                 }
                 try {
@@ -247,18 +247,18 @@ public class MainActivity extends Activity {
                 case 1:
                     String strData= (String) msg.obj;
                     String[] strStateData=strData.split(" ");
-                    System.out.println("处理后数据长度："+strStateData.length);
-                    for (String str : strStateData
-                            ) {
-                        System.out.println("处理后的数据："+str);
-                    }
+//                    System.out.println("处理后数据长度："+strStateData.length);
+//                    for (String str : strStateData
+//                            ) {
+//                        System.out.println("处理后的数据："+str);
+//                    }
 
 
                     if ((strStateData[5].equals("BB")) && (strStateData[0].equals("AA"))) {
-                        System.out.println("校验成功");
-                        System.out.println("十位："+strParseToInt(strStateData[1]));
-                        System.out.println("个位："+strParseToInt(strStateData[2]));
-                        System.out.println("和："+strParseToInt(strStateData[1])+strParseToInt(strStateData[2]));
+//                        System.out.println("校验成功");
+//                        System.out.println("十位："+strParseToInt(strStateData[1]));
+//                        System.out.println("个位："+strParseToInt(strStateData[2]));
+//                        System.out.println("和："+strParseToInt(strStateData[1])+strParseToInt(strStateData[2]));
                         curFloor.setText(""+strParseToInt(strStateData[1])+strParseToInt(strStateData[2]));
                         switch (strParseToInt(strStateData[3])){
 //                            case 0:arrowFlag.setImageResource(R.drawable.up);break;
@@ -335,7 +335,7 @@ public class MainActivity extends Activity {
     }
 
     private int getNumFromWeek(String week) {
-        String[] weekDays = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
+        String[] weekDays = {"星期一", "星期二", "星期三", "星期四", "星期五", "星期六","星期日"};
         for(int i=0;i<weekDays.length;i++){
             if (week.equals(weekDays[i])) {
                 return i;
@@ -356,18 +356,15 @@ public class MainActivity extends Activity {
                     SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
                     curdate.setText(format.format(date)); //更新时间
 
-
-
                     format=new SimpleDateFormat("EEEE");
 //                    dayOfWeek.setText(format.format(date));//更新星期
 
-                    dayOfWeek.setText(""+getNumFromWeek(format.format(date)+""));//更新星期
-
+//                    dayOfWeek.setImageBitmap(""+getNumFromWeek(format.format(date)+""));//更新星期
+                    dayOfWeek.setImageBitmap(netwinData.bmWeek.get(getNumFromWeek(format.format(date))));//更新星期
                     break;
                 default:
                     break;
             }
         }
     };
-
 }

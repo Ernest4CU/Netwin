@@ -14,6 +14,7 @@ public class NetwinData {
     private String strRootPath = "/mnt/sdcard1/Netwin";
     private String strVideoPath = strRootPath+"/Video";
     private String strPicPath = strRootPath+"/Pic";
+    private String strDirPicPath = strPicPath + "/Dir";
     private String strLogoPicPath = strPicPath+"/Logo";
     private String strWeekPicPath = strPicPath+"/Week";
     private String strNumPicPath = strPicPath+"/Num";
@@ -27,40 +28,72 @@ public class NetwinData {
 //    private String StrPicLogoPath = strLogoPicPath + "/logo_pic.jpg";
 
     List<Bitmap> bmWeek = new ArrayList<>();
-    private String strLogo = strLogoPicPath+"/logo_pic.jpg";//文件地址
-    private String strMon = strWeekPicPath + "/mon_pic.jpg";
-    private String strTUE = strWeekPicPath + "/tue_pic.jpg";
-    private String strWED = strWeekPicPath + "/wed_pic.jpg";
-    private String strTHU = strWeekPicPath + "/thu_pic.jpg";
-    private String strFRI = strWeekPicPath + "/fri_pic.jpg";
-    private String strSAT = strWeekPicPath + "/sat_pic.jpg";
-    private String strSUN = strWeekPicPath + "/sun_pic.jpg";
+    private String strLogo = strLogoPicPath+"/logo_pic.png";//文件地址
+    private String strMON = strWeekPicPath + "/mon_pic.png";
+    private String strTUE = strWeekPicPath + "/tue_pic.png";
+    private String strWED = strWeekPicPath + "/wed_pic.png";
+    private String strTHU = strWeekPicPath + "/thu_pic.png";
+    private String strFRI = strWeekPicPath + "/fri_pic.png";
+    private String strSAT = strWeekPicPath + "/sat_pic.png";
+    private String strSUN = strWeekPicPath + "/sun_pic.png";
 
-    private String strDirPicPath = strPicPath + "/Dir";
+
 
     private Bitmap up_pic;
     private Bitmap down_pic;
+    private Bitmap mon_pic;
+
 
     public NetwinData() {
-        up_pic = getImgBitmap( strDirPicPath+ "/up_pic.jpg");
-        down_pic = getImgBitmap( strDirPicPath+ "/down_pic.jpg");
-
-//        System.out.println("箭头添加成功");
-//        bmWeek.add(getImgBitmap(strMon));
-//        bmWeek.add(getImgBitmap(strTUE));
-//        bmWeek.add(getImgBitmap(strWED));
-//        bmWeek.add(getImgBitmap(strTHU));
-//        bmWeek.add(getImgBitmap(strFRI));
-//        bmWeek.add(getImgBitmap(strSAT));
-//        bmWeek.add(getImgBitmap(strSUN));
-//        System.out.println("添加星期图片成功");
+        up_pic = decodeSampleFromSD( strDirPicPath+ "/up_pic.png",160,170);
+        down_pic = decodeSampleFromSD( strDirPicPath+ "/down_pic.png",160,170);
+        System.out.println("箭头添加成功");
+        bmWeek.add(decodeSampleFromSD(strMON,160,60));
+        bmWeek.add(decodeSampleFromSD(strTUE,160,60));
+        bmWeek.add(decodeSampleFromSD(strWED,160,60));
+        bmWeek.add(decodeSampleFromSD(strTHU,160,60));
+        bmWeek.add(decodeSampleFromSD(strFRI,160,60));
+        bmWeek.add(decodeSampleFromSD(strSAT,160,60));
+        bmWeek.add(decodeSampleFromSD(strSUN,160,60));
+        System.out.println("添加星期图片成功");
     }
 
-    private Bitmap getImgBitmap(String parth) {
+    public static int calculateInSampleSize(BitmapFactory.Options options,  int reqWidth, int reqHeight) {
+        // 源图片的高度和宽度
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+        if (height > reqHeight || width > reqWidth) {
+            // 计算出实际宽高和目标宽高的比率
+            final int heightRatio = Math.round((float) height / (float) reqHeight);
+            final int widthRatio = Math.round((float) width / (float) reqWidth);
+            // 选择宽和高中最小的比率作为inSampleSize的值，这样可以保证最终图片的宽和高           // 一定都会大于等于目标的宽和高。
+            inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
+        }
+        return inSampleSize;
+
+    }
+    public Bitmap decodeSampleFromSD(String path,int sdwidth,int sdheight){
+        BitmapFactory.Options options=new BitmapFactory.Options();
+        options.inJustDecodeBounds=true;
+
+        BitmapFactory.decodeFile(path, options);
+        options.inSampleSize=calculateInSampleSize(options, sdwidth, sdheight);
+        options.inJustDecodeBounds=false;
+        options.inDither=false;
+        options.inPreferredConfig=Bitmap.Config.ARGB_8888;
+
+
+        return BitmapFactory.decodeFile(path, options);
+    }
+
+    private Bitmap getImgBitmap(String Path) {
         Bitmap imgBitmap=null;
-        File file = new File(parth);
+        File file = new File(Path);
         if (file.exists()) {
-            imgBitmap = BitmapFactory.decodeFile(parth);
+//            BitmapFactory.Options options = new BitmapFactory.Options();
+//            options.inJustDecodeBounds = true;
+            imgBitmap = BitmapFactory.decodeFile(Path);
         }
         return imgBitmap;
     }
@@ -126,5 +159,9 @@ public class NetwinData {
 
     public Bitmap getDown_pic() {
         return down_pic;
+    }
+
+    public Bitmap getMon_pic() {
+        return mon_pic;
     }
 }

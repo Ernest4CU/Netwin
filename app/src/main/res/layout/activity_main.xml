@@ -65,13 +65,12 @@
                 android:text="2016-4-4"
                 android:textSize="35dp"
                 android:gravity="center"/>
-            <TextView
+            <ImageView
                 android:layout_width="160px"
                 android:layout_height="60px"
                 android:id="@+id/dayOfWeek"
-                android:text="星期一"
-                android:textSize="40dp"
                 android:gravity="center"/>
+
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
