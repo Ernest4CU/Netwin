@@ -357,10 +357,10 @@ public class MainActivity extends Activity {
                     curdate.setText(format.format(date)); //更新时间
 
                     format=new SimpleDateFormat("EEEE");
-//                    dayOfWeek.setText(format.format(date));//更新星期
 
-//                    dayOfWeek.setImageBitmap(""+getNumFromWeek(format.format(date)+""));//更新星期
-                    dayOfWeek.setImageBitmap(netwinData.bmWeek.get(getNumFromWeek(format.format(date))));//更新星期
+//                    dayOfWeek.setImageBitmap(netwinData.bmWeek.get(getNumFromWeek(format.format(date))));//更新星期
+                    dayOfWeek.setImageBitmap(netwinData.bmFloor.get(0));
+
                     break;
                 default:
                     break;

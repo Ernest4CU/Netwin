@@ -37,6 +37,17 @@ public class NetwinData {
     private String strSAT = strWeekPicPath + "/sat_pic.png";
     private String strSUN = strWeekPicPath + "/sun_pic.png";
 
+    List<Bitmap> bmFloor = new ArrayList<>();
+
+    String[] strFloorData = new String[]{strNumPicPath + "/0_pic.png",strNumPicPath + "/1_pic.png",strNumPicPath + "/2_pic.png",
+            strNumPicPath + "/3_pic.png",strNumPicPath + "/4_pic.png",strNumPicPath + "/5_pic.png",strNumPicPath + "/6_pic.png",
+            strNumPicPath + "/7_pic.png",strNumPicPath + "/8_pic.png",strNumPicPath + "/9_pic.png",
+            strLetterPicPath + "/a_pic.png",strLetterPicPath + "/b_pic.png",strLetterPicPath + "/c_pic.png",strLetterPicPath + "/d_pic.png",
+            strLetterPicPath + "/e_pic.png",strLetterPicPath + "/f_pic.png",strLetterPicPath + "/g_pic.png",strLetterPicPath + "/h_pic.png",
+            strLetterPicPath + "/j_pic.png",strLetterPicPath + "/k_pic.png",strLetterPicPath + "/l_pic.png",strLetterPicPath + "/m_pic.png",
+            strLetterPicPath + "/n_pic.png",strLetterPicPath + "/o_pic.png",strLetterPicPath + "/p_pic.png",strLetterPicPath + "/q_pic.png",
+            strLetterPicPath + "/r_pic.png",strLetterPicPath + "/s_pic.png",strLetterPicPath + "/t_pic.png",strLetterPicPath + "/u_pic.png",
+            strLetterPicPath + "/v_pic.png",strLetterPicPath + "/w_pic.png",strLetterPicPath + "/x_pic.png",strLetterPicPath + "/y_pic.png",strLetterPicPath + "/z_pic.png"};
 
 
     private Bitmap up_pic;
@@ -55,6 +66,7 @@ public class NetwinData {
         bmWeek.add(decodeSampleFromSD(strFRI,160,60));
         bmWeek.add(decodeSampleFromSD(strSAT,160,60));
         bmWeek.add(decodeSampleFromSD(strSUN,160,60));
+        bmFloor.add(decodeSampleFromSD(strFloorData[18],80,230));
         System.out.println("添加星期图片成功");
     }
 
